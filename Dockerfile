@@ -9,13 +9,16 @@ RUN mkdir -p $APPDIR
 WORKDIR $APPDIR
 
 # Install system dependencies
+ENV RUNTIME_PACKAGES socat curl
 ENV BUILD_PACKAGES git build-base
+RUN apk --no-cache add $RUNTIME_PACKAGES
 
 # Install Sia
 RUN apk --no-cache add $BUILD_PACKAGES && \
     go get -u github.com/NebulousLabs/Sia/... && \
     apk del $BUILD_PACKAGES
 
-EXPOSE 9980
-ENTRYPOINT ['sh']
-CMD ['siad', '-d', '$APPDIR', '--api-addr', '0.0.0.0:9980']
+COPY entrypoint.sh $APPDIR
+
+EXPOSE 8000
+ENTRYPOINT ./entrypoint.sh
