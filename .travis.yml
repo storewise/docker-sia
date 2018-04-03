@@ -10,15 +10,14 @@ env:
   - secure: jQ1phRvivtBKM2k8oUL1ZbhwsQ/v/rnYh7Anml/bpRbpAFokFpg+kZqPfiCvvIzBDeEpTb9K/Z4+V8xGiE3UiB3xZvtsKVCe2XqkGeyMaUAga39E23bANpTX9hU2eBqCrKW/U5WpChAHb+Fng3YCe56EWIVLQ6KTb1cj2yhPhc6H1HXboyB1rgMe3dAA8da9tDpvyrYwrgAotBNRcjosI9XCtv3b1wcqtC9gm+b1/gdK1rbaC7z/zaMLmFHXfmqdF8gtjSJXuLxWR7qleq53YtKNrlpyr6pt5I8IyqgJm0AFulaGVkCQ7MqIIx2NlzodcfXomzcQNWpWPtYpm6RAUNr1rmCkzqwcbOAANz5sHItdOQ8dT7z3ecOvk4aT7jdGbHXIIAPgQ+9ae/WgZT0zFM8t0hJNeQw+Nj0w2sKcCFXsaHi6CMcQy1QV2Mkvoo+pq6mvAk1aXVLB5v/MgHpG7KZd+BJQCIJPlYauHmWqKUEsMbEvu1jj35c7mS/VlnixAvt0Q8AVtjOP4tt04wISUrwtWzPz6seAStNvW6XCibnjidJNvrYfebt6gPP6nBou4nbi5yEYeN8K3ByShMPb3Xd8I4sXeJuQ/7evH2owOg8bCre0OOFdgwhQrvnQbVu+x7C+rXHxYiunBu4iRZT+kAUmTu4wAo4M6gPSrmso6j8=
 
 stages:
-  - build
-  - name: push
+  - name: build
     if: branch = master
 
 jobs:
   include:
-    - stage: build
-      script: "docker build -t $DOCKER_IMAGE ."
     - stage: push
       before_script:
         - 'echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --password-stdin'
-      script: "docker push $DOCKER_IMAGE"
+      script:
+        - "docker build -t $DOCKER_IMAGE ."
+        - "docker push $DOCKER_IMAGE"
