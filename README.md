@@ -5,8 +5,8 @@
 Docker image for Sia project.
 
 ## Getting started
-To run _Goobox Nodes Scraper_ you need previously to install the requirements and you can either use public docker 
-image or build it from sources.
+To run _Sia_ you need previously to install the requirements and you can either use public docker image or build it 
+from sources.
 
 ### Requirements
 1. *Docker:* Install it following [official docs](https://docs.docker.com/engine/installation/).
