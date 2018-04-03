@@ -5,9 +5,9 @@ services:
 
 env:
   global:
-  - DOCKER_IMAGE=goobox/docker-sia:latest
-  - secure: SYMO0qbwWvK6V3FnjF8Fm3pg/WYEzDBqApNaW8I3k3PLnXshC+c1Ujnc5Hmy2VaysEmwy4Yea/XX9YN0LrvUHngSJ+EtDjSGiQKCuOpvwXL4DVE0kEBQcA2K5/88urtDrLEhlclMZzM6aYWBhGQ3rgtN1UNEd4SclCp/hPYJBrn9AJjuTYqjVXt4iwrlj68nI0ImT1+1+AqXxV7C6S6ewd1cJUlAPIzyDAMG47FYXk3NpyU+SycTveQYA8J5SsPquyjusmY6TIPP0Su6C6oPVkQC7OnNOCxxVYseu+cn/xO3gKCPyXjZsCi6WDTY1kEEHtFUEy6WkrggDFZg5fK9u5Wn7Ho/YLYLTkAL9E/yhaRfJnb/JIVwvKy+lj2RG+wyKOd4UMJANfIg2znQBEUFFOCkEqbXOCzALVN/RsfDj8w6aGI3E4LmKKaXpehfrGctkwEusxhk6HVd3KYFPT8jqXAwyY48GZbzkfHgkVY6kaYQVJp9zJ/Yw3eTpWASuzTHAQWF3+ZyKwYzH8sjrNmTw/L+ZHInOUAOARDAg+ThL+k1HytJ9sJYfJ7jU6WtiKGfBV3yhVD5bViM4U2urvkRjVglQSrz23Dg49h6Tc5K2R1EDxt6+ODUQ4nVI7pXJeZASV3Sl1nqns6ucctR3gptXdX1h72qZHaRgLJWfddrIpI=
-  - secure: jQ1phRvivtBKM2k8oUL1ZbhwsQ/v/rnYh7Anml/bpRbpAFokFpg+kZqPfiCvvIzBDeEpTb9K/Z4+V8xGiE3UiB3xZvtsKVCe2XqkGeyMaUAga39E23bANpTX9hU2eBqCrKW/U5WpChAHb+Fng3YCe56EWIVLQ6KTb1cj2yhPhc6H1HXboyB1rgMe3dAA8da9tDpvyrYwrgAotBNRcjosI9XCtv3b1wcqtC9gm+b1/gdK1rbaC7z/zaMLmFHXfmqdF8gtjSJXuLxWR7qleq53YtKNrlpyr6pt5I8IyqgJm0AFulaGVkCQ7MqIIx2NlzodcfXomzcQNWpWPtYpm6RAUNr1rmCkzqwcbOAANz5sHItdOQ8dT7z3ecOvk4aT7jdGbHXIIAPgQ+9ae/WgZT0zFM8t0hJNeQw+Nj0w2sKcCFXsaHi6CMcQy1QV2Mkvoo+pq6mvAk1aXVLB5v/MgHpG7KZd+BJQCIJPlYauHmWqKUEsMbEvu1jj35c7mS/VlnixAvt0Q8AVtjOP4tt04wISUrwtWzPz6seAStNvW6XCibnjidJNvrYfebt6gPP6nBou4nbi5yEYeN8K3ByShMPb3Xd8I4sXeJuQ/7evH2owOg8bCre0OOFdgwhQrvnQbVu+x7C+rXHxYiunBu4iRZT+kAUmTu4wAo4M6gPSrmso6j8=
+    - DOCKER_IMAGE=goobox/docker-sia:latest
+    - secure: JFlbXF5GE0T63F6Dpd9EWfkrBcJZOSp+cctHCTu/d2JkqHNLtN5J8tPDDZwZZT9BTvV/05i9aZcvx3/cDsgVn1bMDqxApVFVcEvKaSYYk9HQ7YROyxKpfT8xiB0tyKauCaLEaEIRPL4yFM1cv4Gm3v9ZhkDBcilUaJx++Sim/o+HBOn8VYud0+OBA8qUos5mo4+u9fGk65eQzgI31Sg/a3udwARplrJnvUh+6sshNxhRmj2cCdwfNbBB5oOOS9LEgrY8sC4HNH9FirfO2sey+t6wOTANQIBQvFrdFOsMdwhG+wHSPyqQcXZagFrJOJctXT0c/KYrsr4A+IcgxrlBU7Hq86CB9vs91YfQTpPqS080wXd8PFE9qpx4N0B+pJ8yy9Lbarlwl3NeQYdxL2j4vbO5NKxJ2Vjbwr4hX5Br86z41Xt/dNI85onDKdSyE5ENPi3a+ejK5zoBvttUO0AQfwpi11CYKG8dVk36tASZg0TEV637ZWPfc/ZGCBuToJ6GNOUBpTzWsxP2q1QPWjqgLhYqxG7g1aS1L2WLV4d9f4lW6sUMj+hTbVFwY4PFK6AMcNCQ/K+WAglntYOF5EV+65J1c4n6l0/YoZCQV6P9bL525KS7LKUIblvH2Xdisa9Vlf7iDO5NWimHZTsdXVuNvdkS2Oy1toLYsxJ9jS8rr2E=
+    - secure: RfiNOkv7p2vvUXgTSnzVWSaGhbtjE3oF5wK3p+WPhKn8j/9b9tcBeNZ54J+ipFFH6zs9oJYR93jOIhBJMAKwRzEvOA2JQ69SBO76MUpDaT1s0JhxCSUhA63YWr5PU5uMb6JmRkl08I9JNDM1dPt2BaZeclpTTjq0F6C3eTaOr9wke95ShBtKdrLjCoXKrGYSCx9UYjYz5kmKqt/ROID79rtozJcxhu40wJHzNaTjyVtzy3rfaNG/XcjWBe50rzPHUr+oWnfOyAvVjKoNXEfdC4kiq6UlL+LJLORTpLQa21LGP39XycW07Aom2S/hesTQqII6zJ9pQlQF6auzXnx4PUdpR+BUfz+yzZw2PZ44mMbi3Zd9s0toi6YcPvKKYEPoVtPbSCMJcWWv1nWvd9yzp6dePYTcQ9igeX2zt4rcx1ZplgODCCjwQkkPeE4EoMdYKEQ7f+We3wUQLcuJP+ZUac1Hh+SJ+me9zUy6BrmuvmxHHwJyFPnTd7+Bgdwij6A+aV+K4z30OR57u7sEPBuxhuCBjOFz5BkCGdA4d+E0Z3b8SAg0RKzAuOxqCrmDTeGR5MP5c1FE6N3uBI65P51y083QT8J3QxZLAW+Y4ehd3pO9ErJYqVy2evER3sUZ7/E5uQV3tYxqVdl7+fY1Emjq/VBtgRubqhmxPnttJEjbKeU=
 
 stages:
   - name: build
@@ -17,7 +17,7 @@ jobs:
   include:
     - stage: push
       before_script:
-        - 'echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --password-stdin'
+        - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --password-stdin
       script:
-        - "docker build -t $DOCKER_IMAGE ."
-        - "docker push $DOCKER_IMAGE"
+        - docker build -t $DOCKER_IMAGE .
+        - docker push $DOCKER_IMAGE
