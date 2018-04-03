@@ -14,12 +14,8 @@ image or build it from sources.
 ### Use public image
 You can use public docker image to run the Sia service:
 
-    docker run -v 9981-9982:9981-9982 siad
+    docker run -p 8000:8000 goobox/docker-sia:latest
 
 ## License
 
 [GNU GPL v3](https://github.com/GooBox/docker-sia/blob/master/LICENSE)
-
-## Credits
-
-This product includes GeoLite2 data created by [MaxMind](http://www.maxmind.com).
