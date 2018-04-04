@@ -11,9 +11,19 @@ RUN mkdir -p $APPDIR $SIADIR
 WORKDIR $APPDIR
 
 # Install system dependencies
-ENV RUNTIME_PACKAGES socat wget ca-certificates unzip
+ENV RUNTIME_PACKAGES socat wget ca-certificates unzip python3-minimal
+ENV BUILD_PACKAGES python3-pip
 RUN apt-get update && \
     apt-get --no-install-recommends -y install $RUNTIME_PACKAGES && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install python dependencies
+COPY requirements.txt constraints.txt $APPDIR/
+RUN apt-get update && \
+    apt-get --no-install-recommends -y install $BUILD_PACKAGES && \
+    python3 -m pip install --no-cache -r requirements.txt -c constraints.txt && \
+    apt-get autoclean && \
+    apt-get purge -y $BUILD_PACKAGES && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Sia
@@ -25,7 +35,7 @@ RUN wget --progress=bar:force:noscroll --show-progress -q $SIA_RELEASE -O $SIADI
     rm -r $SIADIR/Sia-v${SIA_VERSION}-linux-amd64 && \
     rm $SIADIR/sia.zip
 
-COPY entrypoint.sh $APPDIR
+COPY run $APPDIR/
 
 EXPOSE 8000
-ENTRYPOINT ./entrypoint.sh
+ENTRYPOINT ["python3", "run"]

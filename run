@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+"""Run script.
+"""
+import os
+import subprocess
+import sys
+import zlib
+
+import requests
+from clinner.command import Type as CommandType, command
+from clinner.inputs import bool_input
+from clinner.run.main import Main
+from tqdm import tqdm
+
+DB_URL = 'https://consensus.siahub.info/consensus.db.gz'
+DB_FILE = 'consensus/consensus.db'
+
+
+def _download_consensus():
+    decompress = zlib.decompressobj(16+zlib.MAX_WBITS)
+    with open(DB_FILE, 'wb') as output_file, requests.get(DB_URL, stream=True) as r:
+        total = int(r.headers.get('content-length', 0))
+
+        with tqdm(total=total, unit='B', unit_scale=True, unit_divisor=2 ** 10) as pbar:
+            for data in r.iter_content(32 * (2 ** 10)):
+                output_file.write(decompress.decompress(data))
+                pbar.update(len(data))
+
+        output_file.write(decompress.flush())
+
+
+@command(command_type=CommandType.PYTHON,
+         args=((('--bootstrap',), {'help': 'Bootstrap consensus database', 'action': 'store_true'}),
+               (('--no-bootstrap',), {'help': 'Do not bootstrap consensus database', 'action': 'store_true'}),),
+         parser_opts={'help': 'Start Sia daemon'})
+def start(*args, **kwargs):
+    if not kwargs['no_bootstrap'] and \
+            (kwargs['bootstrap'] or bool_input('Do you want to bootstrap consensus database?')):
+        os.makedirs('consensus', exist_ok=True)
+        _download_consensus()
+
+    subprocess.run('socat tcp-listen:8000,reuseaddr,fork tcp:localhost:9980 '
+                   '& siad --sia-directory {}'.format(os.getcwd()), shell=True)
+
+
+if __name__ == '__main__':
+    sys.exit(Main().run())

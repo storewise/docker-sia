@@ -14,7 +14,7 @@ from sources.
 ### Use public image
 You can use public docker image to run the Sia service:
 
-    docker run -p 8000:8000 goobox/docker-sia:latest
+    docker run -p 8000:8000 goobox/docker-sia:latest start
 
 ## License
 
