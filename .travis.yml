@@ -1,23 +1,22 @@
-sudo: required
-
+sudo: false
 services:
-  - docker
-
+- docker
 env:
   global:
-    - DOCKER_IMAGE=goobox/docker-sia:latest
-    - secure: JFlbXF5GE0T63F6Dpd9EWfkrBcJZOSp+cctHCTu/d2JkqHNLtN5J8tPDDZwZZT9BTvV/05i9aZcvx3/cDsgVn1bMDqxApVFVcEvKaSYYk9HQ7YROyxKpfT8xiB0tyKauCaLEaEIRPL4yFM1cv4Gm3v9ZhkDBcilUaJx++Sim/o+HBOn8VYud0+OBA8qUos5mo4+u9fGk65eQzgI31Sg/a3udwARplrJnvUh+6sshNxhRmj2cCdwfNbBB5oOOS9LEgrY8sC4HNH9FirfO2sey+t6wOTANQIBQvFrdFOsMdwhG+wHSPyqQcXZagFrJOJctXT0c/KYrsr4A+IcgxrlBU7Hq86CB9vs91YfQTpPqS080wXd8PFE9qpx4N0B+pJ8yy9Lbarlwl3NeQYdxL2j4vbO5NKxJ2Vjbwr4hX5Br86z41Xt/dNI85onDKdSyE5ENPi3a+ejK5zoBvttUO0AQfwpi11CYKG8dVk36tASZg0TEV637ZWPfc/ZGCBuToJ6GNOUBpTzWsxP2q1QPWjqgLhYqxG7g1aS1L2WLV4d9f4lW6sUMj+hTbVFwY4PFK6AMcNCQ/K+WAglntYOF5EV+65J1c4n6l0/YoZCQV6P9bL525KS7LKUIblvH2Xdisa9Vlf7iDO5NWimHZTsdXVuNvdkS2Oy1toLYsxJ9jS8rr2E=
-    - secure: RfiNOkv7p2vvUXgTSnzVWSaGhbtjE3oF5wK3p+WPhKn8j/9b9tcBeNZ54J+ipFFH6zs9oJYR93jOIhBJMAKwRzEvOA2JQ69SBO76MUpDaT1s0JhxCSUhA63YWr5PU5uMb6JmRkl08I9JNDM1dPt2BaZeclpTTjq0F6C3eTaOr9wke95ShBtKdrLjCoXKrGYSCx9UYjYz5kmKqt/ROID79rtozJcxhu40wJHzNaTjyVtzy3rfaNG/XcjWBe50rzPHUr+oWnfOyAvVjKoNXEfdC4kiq6UlL+LJLORTpLQa21LGP39XycW07Aom2S/hesTQqII6zJ9pQlQF6auzXnx4PUdpR+BUfz+yzZw2PZ44mMbi3Zd9s0toi6YcPvKKYEPoVtPbSCMJcWWv1nWvd9yzp6dePYTcQ9igeX2zt4rcx1ZplgODCCjwQkkPeE4EoMdYKEQ7f+We3wUQLcuJP+ZUac1Hh+SJ+me9zUy6BrmuvmxHHwJyFPnTd7+Bgdwij6A+aV+K4z30OR57u7sEPBuxhuCBjOFz5BkCGdA4d+E0Z3b8SAg0RKzAuOxqCrmDTeGR5MP5c1FE6N3uBI65P51y083QT8J3QxZLAW+Y4ehd3pO9ErJYqVy2evER3sUZ7/E5uQV3tYxqVdl7+fY1Emjq/VBtgRubqhmxPnttJEjbKeU=
-
+  - DOCKER_IMAGE=goobox/docker-sia:latest
+  - secure: JFlbXF5GE0T63F6Dpd9EWfkrBcJZOSp+cctHCTu/d2JkqHNLtN5J8tPDDZwZZT9BTvV/05i9aZcvx3/cDsgVn1bMDqxApVFVcEvKaSYYk9HQ7YROyxKpfT8xiB0tyKauCaLEaEIRPL4yFM1cv4Gm3v9ZhkDBcilUaJx++Sim/o+HBOn8VYud0+OBA8qUos5mo4+u9fGk65eQzgI31Sg/a3udwARplrJnvUh+6sshNxhRmj2cCdwfNbBB5oOOS9LEgrY8sC4HNH9FirfO2sey+t6wOTANQIBQvFrdFOsMdwhG+wHSPyqQcXZagFrJOJctXT0c/KYrsr4A+IcgxrlBU7Hq86CB9vs91YfQTpPqS080wXd8PFE9qpx4N0B+pJ8yy9Lbarlwl3NeQYdxL2j4vbO5NKxJ2Vjbwr4hX5Br86z41Xt/dNI85onDKdSyE5ENPi3a+ejK5zoBvttUO0AQfwpi11CYKG8dVk36tASZg0TEV637ZWPfc/ZGCBuToJ6GNOUBpTzWsxP2q1QPWjqgLhYqxG7g1aS1L2WLV4d9f4lW6sUMj+hTbVFwY4PFK6AMcNCQ/K+WAglntYOF5EV+65J1c4n6l0/YoZCQV6P9bL525KS7LKUIblvH2Xdisa9Vlf7iDO5NWimHZTsdXVuNvdkS2Oy1toLYsxJ9jS8rr2E=
+  - secure: RfiNOkv7p2vvUXgTSnzVWSaGhbtjE3oF5wK3p+WPhKn8j/9b9tcBeNZ54J+ipFFH6zs9oJYR93jOIhBJMAKwRzEvOA2JQ69SBO76MUpDaT1s0JhxCSUhA63YWr5PU5uMb6JmRkl08I9JNDM1dPt2BaZeclpTTjq0F6C3eTaOr9wke95ShBtKdrLjCoXKrGYSCx9UYjYz5kmKqt/ROID79rtozJcxhu40wJHzNaTjyVtzy3rfaNG/XcjWBe50rzPHUr+oWnfOyAvVjKoNXEfdC4kiq6UlL+LJLORTpLQa21LGP39XycW07Aom2S/hesTQqII6zJ9pQlQF6auzXnx4PUdpR+BUfz+yzZw2PZ44mMbi3Zd9s0toi6YcPvKKYEPoVtPbSCMJcWWv1nWvd9yzp6dePYTcQ9igeX2zt4rcx1ZplgODCCjwQkkPeE4EoMdYKEQ7f+We3wUQLcuJP+ZUac1Hh+SJ+me9zUy6BrmuvmxHHwJyFPnTd7+Bgdwij6A+aV+K4z30OR57u7sEPBuxhuCBjOFz5BkCGdA4d+E0Z3b8SAg0RKzAuOxqCrmDTeGR5MP5c1FE6N3uBI65P51y083QT8J3QxZLAW+Y4ehd3pO9ErJYqVy2evER3sUZ7/E5uQV3tYxqVdl7+fY1Emjq/VBtgRubqhmxPnttJEjbKeU=
 stages:
-  - name: build
-    if: branch = master
-
+- name: build
+  if: branch = master
 jobs:
   include:
-    - stage: push
-      before_script:
-        - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --password-stdin
-      script:
-        - docker build -t $DOCKER_IMAGE .
-        - docker push $DOCKER_IMAGE
+  - stage: push
+    before_script:
+    - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --password-stdin
+    script:
+    - docker build -t $DOCKER_IMAGE .
+    - docker push $DOCKER_IMAGE
+notifications:
+  slack:
+    secure: i4EETEeiZ5vnSYTEb6bGpTB+oHVmln7glBYsDF4qs5U2CJ1lTnXJcoZtGn/D2lAav0CmwfblzAuU+woEjX0RjHuIeBbvx47MrgDAX6I764ljrmjCR61AD2+zsCpgYVaM/nNch/YGRrviATpFEmAHe+9kGJndny7fKeG1d7T6YaoeDAhFAQ7nq5YpR6XUAQtWTAl8dMridENYSNSAjaAzdrOaDt3ugrefmDGKjayGdk1ZQs+ArwchPpN0KPFnuDI1MVn2AvGWLxnUpBf7dlg/zoAEprPn/VAHu1PsS/Rn14iOnHnX56ZPCiI69WdWWTWn7FDZ1HslZmy+jq7qIaP5ey9C8WdjqpMBPRYNgkH931ezeTpalYquk+z1vSgW74GuJ7g598hhHJHWM99GlZH4CKJ+ezSma/TJoe/V9iTFsmxTD4un1UzADC+zXYHqxHVGWj8zwPwm2S4lWc4t+tJFEhKCkU/vNCh3pA7iBQfyMzHHX5TuD3QW0897WyJ1CwuLfSXHpoT3wCjpBcugMTsWfANschmPtvmXu8coea9ijGRYGV8SmFQ0YeOyq2Ab3pDadUNZW0mUm9fd8JQcs6u1Rmgy6I+VOh0GbUHVYAJXSTup2VGIQKaXGjsGH8XNF0lHIB/tLC0HOEWMC8QyLU0PvRzdcEtAxTuWYRdBc1Vtw64=
