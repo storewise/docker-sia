@@ -31,7 +31,8 @@ def _download_consensus():
 
 @command(command_type=CommandType.PYTHON,
          args=((('--bootstrap',), {'help': 'Bootstrap consensus database', 'action': 'store_true'}),
-               (('--no-bootstrap',), {'help': 'Do not bootstrap consensus database', 'action': 'store_true'}),),
+               (('--no-bootstrap',), {'help': 'Do not bootstrap consensus database', 'action': 'store_true'}),
+               (('--modules',), {'help': 'Run only specific modules'}),),
          parser_opts={'help': 'Start Sia daemon'})
 def start(*args, **kwargs):
     if not kwargs['no_bootstrap'] and \
@@ -39,8 +40,9 @@ def start(*args, **kwargs):
         os.makedirs('consensus', exist_ok=True)
         _download_consensus()
 
+    modules = '--modules {}'.format(kwargs['modules']) if kwargs['modules'] else ''
     subprocess.run('socat tcp-listen:8000,reuseaddr,fork tcp:localhost:9980 '
-                   '& siad --sia-directory {}'.format(os.getcwd()), shell=True)
+                   '& siad --sia-directory {} {}'.format(os.getcwd(), modules), shell=True)
 
 
 if __name__ == '__main__':
