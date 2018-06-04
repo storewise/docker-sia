@@ -32,9 +32,9 @@ RUN apt-get update && \
         $HOME/.cache/pip
 
 # Install Sia
-ENV SIA_VERSION 1.3.3-rc2
+ENV SIA_VERSION 1.3.3-rc3
 # ENV SIA_RELEASE https://github.com/NebulousLabs/Sia/releases/download/v${SIA_VERSION}/Sia-v${SIA_VERSION}-linux-amd64.zip
-ENV SIA_RELEASE https://pixeldra.in/api/getfile/MYcHrD
+ENV SIA_RELEASE https://pixeldra.in/api/getfile/yWzgvH
 RUN wget --progress=bar:force:noscroll --show-progress -q $SIA_RELEASE -O $SIADIR/sia.zip && \
     unzip -q $SIADIR/sia.zip -d $SIADIR && \
     mv $SIADIR/Sia-v${SIA_VERSION}-linux-amd64/* $SIADIR && \
