@@ -6,10 +6,11 @@ ENV APP sia
 ENV BASEDIR /srv/apps/$APP
 ENV APPDIR $BASEDIR/app
 ENV SIADIR $BASEDIR/sia
+ENV DATADIR $BASEDIR/data
 ENV PATH $SIADIR:$PATH
 
 # Create initial dirs
-RUN mkdir -p $APPDIR $SIADIR
+RUN mkdir -p $APPDIR $SIADIR $DATADIR
 WORKDIR $APPDIR
 
 # Install system dependencies

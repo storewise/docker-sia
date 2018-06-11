@@ -15,6 +15,10 @@ from sources.
 You can use public docker image to run the Sia service:
 
     docker run -p 8000:8000 goobox/docker-sia:latest start
+    
+To keep node your node data you can mount data volume as:
+
+    docker run -p 8000:8000 -v data:/srv/apps/sia/data goobox/docker-sia:latest start
 
 ## License
 
