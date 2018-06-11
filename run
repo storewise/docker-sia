@@ -14,8 +14,9 @@ from clinner.run.main import Main
 from tqdm import tqdm
 
 BASE_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "data")
+CONSENSUS_PATH = os.path.join(BASE_PATH, 'consensus')
+CONSENSUS_FILE = os.path.join(CONSENSUS_PATH, "consensus.db")
 DB_URL = "https://consensus.siahub.info/consensus.db.gz"
-DB_FILE = "consensus.db"
 
 
 @command(
@@ -33,7 +34,8 @@ def start(*args, **kwargs):
         kwargs["bootstrap"] or bool_input("Do you want to bootstrap consensus database?")
     ):
         decompress = zlib.decompressobj(16 + zlib.MAX_WBITS)
-        with open(DB_FILE, "wb") as output_file, requests.get(DB_URL, stream=True) as r:
+        os.makedirs(CONSENSUS_PATH, exist_ok=True)
+        with open(CONSENSUS_FILE, "wb") as output_file, requests.get(DB_URL, stream=True) as r:
             total = int(r.headers.get("content-length", 0))
 
             with tqdm(total=total, unit="B", unit_scale=True, unit_divisor=2 ** 10) as pbar:
