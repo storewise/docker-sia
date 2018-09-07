@@ -26,7 +26,7 @@ RUN python3 -m pip install --no-cache-dir --upgrade pip poetry && \
     poetry cache:clear pypi --all
 
 # Install Sia
-ENV SIA_VERSION 1.3.3
+ENV SIA_VERSION 1.3.4
 ENV SIA_RELEASE https://github.com/NebulousLabs/Sia/releases/download/v${SIA_VERSION}/Sia-v${SIA_VERSION}-linux-amd64.zip
 RUN wget --progress=bar:force:noscroll --show-progress -q $SIA_RELEASE -O $SIADIR/sia.zip && \
     unzip -q $SIADIR/sia.zip -d $SIADIR && \
