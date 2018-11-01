@@ -48,7 +48,7 @@ def start(*args, **kwargs):
     modules = "--modules {}".format(kwargs["modules"]) if kwargs["modules"] else ""
     subprocess.run(
         "socat tcp-listen:8000,reuseaddr,fork tcp:localhost:9980 "
-        "& siad --sia-directory {} {}".format(os.getcwd(), modules),
+        "& siad --sia-directory {} {} {}".format(os.getcwd(), modules, " ".join(args)),
         shell=True,
     )
 
