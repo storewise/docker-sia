@@ -1,4 +1,4 @@
-FROM python:3.6-slim
+FROM python:3.7-slim
 
 ENV LC_ALL C.UTF-8
 ENV PYTHONIOENCODING utf-8
@@ -20,7 +20,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install python dependencies
-COPY pyproject.toml pyproject.lock $APPDIR/
+COPY pyproject.toml poetry.lock $APPDIR/
 RUN python3 -m pip install --no-cache-dir --upgrade pip poetry && \
     poetry install && \
     poetry cache:clear pypi --all
@@ -34,7 +34,7 @@ RUN wget --progress=bar:force:noscroll --show-progress -q $SIA_RELEASE -O $SIADI
     rm -r $SIADIR/Sia-v${SIA_VERSION}-linux-amd64 && \
     rm $SIADIR/sia.zip
 
-COPY run $APPDIR/
+COPY __main__.py $APPDIR/
 
 EXPOSE 8000
-ENTRYPOINT ["poetry", "run", "python", "run"]
+ENTRYPOINT ["poetry", "run", "python", "__main__.py"]

@@ -39,17 +39,30 @@ def start(*args, **kwargs):
             decompress = zlib.decompressobj(16 + zlib.MAX_WBITS)
             os.makedirs(CONSENSUS_PATH, exist_ok=True)
             try:
-                with open(CONSENSUS_FILE, "wb") as output_file, requests.get(DB_URL, stream=True) as r:
+                with open(CONSENSUS_FILE, "wb") as output_file, requests.get(DB_URL, stream=True) as r, \
+                        tqdm(unit="B", unit_scale=True, unit_divisor=2 ** 10) as pbar:
                     total = int(r.headers.get("content-length", 0))
+                    pbar.total = total
+                    percents = [(i, total / 100 * i) for i in range(10, 100, 10)]
+                    next_percent, next_value = percents.pop(0)
 
-                    with tqdm(total=total, unit="B", unit_scale=True, unit_divisor=2 ** 10) as pbar:
-                        for data in r.iter_content(32 * (2 ** 10)):
-                            output_file.write(decompress.decompress(data))
-                            pbar.update(len(data))
+                    pbar.write(f"Starting download consensus database ({total} bytes)")
+
+                    for data in r.iter_content(32 * (2 ** 10)):
+                        output_file.write(decompress.decompress(data))
+                        pbar.update(len(data))
+
+                        if pbar.n >= next_value:
+                            pbar.write(f"Downloaded {next_percent}% ({pbar.n} bytes)")
+                            try:
+                                next_percent, next_value = percents.pop(0)
+                            except IndexError:
+                                next_percent, next_value = None, None
 
                     output_file.write(decompress.flush())
+                    pbar.write("Download finished")
             except zlib.error as e:
-                print("Failed to download the bootstrap database: {}".format(e))
+                print(f"Failed to download the bootstrap database: {e}")
 
     modules = "--modules {}".format(kwargs["modules"]) if kwargs["modules"] else ""
     subprocess.run(

@@ -17,12 +17,12 @@
     hooks:
     -   id: flake8
         name: Flake8 - Code Linter
-        entry: flake8
+        entry: poetry __main__.py flake8
         language: system
         types: [python]
     -   id: black
         name: Black - Code Style
-        entry: black
+        entry: poetry __main__.py black
         args:
         - -q
         - --safe
@@ -31,10 +31,8 @@
         types: [python]
     -   id: isort
         name: Isort - Sort Imports
-        entry: isort
+        entry: poetry __main__.py isort
         args:
-        - -e 
-        - -m 4 
-        - -w 120
+        - -e
         language: system
         types: [python]

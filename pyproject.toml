@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "docker-sia"
-version = "1.3.3"
+version = "1.3.7"
 description = "Docker image for Sia project."
 authors = ["José Antonio Perdiguero López <perdy@perdy.io>"]
 license = "GPL-3.0+"
 
 [tool.poetry.dependencies]
-python = "^3.5"
-clinner = "^1.9"
+python = "^3.7"
+clinner = "^1.10"
 tqdm = "^4.23"
 requests = "^2.18"
 
