@@ -44,7 +44,7 @@ def start(*args, **kwargs):
                     total = int(r.headers.get("content-length", 0))
                     pbar.total = total
                     percents = [(i, total / 100 * i) for i in range(10, 100, 10)]
-                    next_percent, next_value = percents.pop(0)
+                    notify_percent, notify_value = percents.pop(0)
 
                     pbar.write(f"Starting download consensus database ({total} bytes)")
 
@@ -52,12 +52,12 @@ def start(*args, **kwargs):
                         output_file.write(decompress.decompress(data))
                         pbar.update(len(data))
 
-                        if pbar.n >= next_value:
-                            pbar.write(f"Downloaded {next_percent}% ({pbar.n} bytes)")
+                        if notify_value and pbar.n >= notify_value:
+                            pbar.write(f"Downloaded {notify_percent}% ({pbar.n} bytes)")
                             try:
-                                next_percent, next_value = percents.pop(0)
+                                notify_percent, notify_value = percents.pop(0)
                             except IndexError:
-                                next_percent, next_value = None, None
+                                notify_percent, notify_value = None, None
 
                     output_file.write(decompress.flush())
                     pbar.write("Download finished")
