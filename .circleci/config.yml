@@ -28,7 +28,7 @@ jobs:
           name: Push application Docker image
           command: |
             echo $DOCKER_PASSWORD | base64 -d | docker login -u `echo $DOCKER_USERNAME | base64 -d` --password-stdin
-            export $SIA_VERSION=`awk '$2=="SIA_VERSION" {print $3}' Dockerfile`
+            export SIA_VERSION=`awk '$2=="SIA_VERSION" {print $3}' Dockerfile`
             docker tag app "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${SIA_VERSION}"
             docker push "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${SIA_VERSION}"
 workflows:
