@@ -1,5 +1,5 @@
 # docker-sia
-[![Build Status](https://travis-ci.org/GooBox/docker-sia.svg?branch=master)](https://travis-ci.org/GooBox/docker-sia)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/GooBox/docker-sia/master.svg)](https://circleci.com/gh/GooBox/docker-sia)
 [![GPLv3](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://www.gnu.org/copyleft/gpl.html)
 
 Docker image for Sia project.
