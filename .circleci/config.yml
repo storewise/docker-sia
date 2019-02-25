@@ -1,0 +1,42 @@
+version: 2
+jobs:
+  build:
+    working_directory: /app
+    docker:
+      - image: docker:git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
+          paths:
+            - /caches/app.tar
+      - run:
+          name: Build Docker image
+          command: |
+            set +o pipefail
+            docker load -i /caches/app.tar | true
+            docker build --cache-from=app -t app .
+            mkdir -p /caches
+            docker save -o /caches/app.tar app
+      - save_cache:
+          key: v1-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/app.tar
+      - deploy:
+          name: Push application Docker image
+          command: |
+            echo $DOCKER_PASSWORD | base64 --decode | docker login -u `echo $DOCKER_USERNAME | base64 --decode` --password-stdin
+            export $SIA_VERSION=`awk '$2=="SIA_VERSION" {print $3}' Dockerfile`
+            docker tag app "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${SIA_VERSION}"
+            docker push "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${SIA_VERSION}"
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
