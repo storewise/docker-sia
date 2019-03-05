@@ -9,7 +9,20 @@ license = "GPL-3.0+"
 python = "^3.7"
 clinner = "^1.10"
 tqdm = "^4.23"
-requests = "^2.18"
+aiohttp = "^3.5"
+requests = "^2.21"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.5"
+
+[tool.black]
+line-length = 120
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.tox
+  | build
+  | dist
+)/
+'''
