@@ -123,10 +123,10 @@ async def start(*args, **kwargs):
 
     consensus = ConsensusDB(base_path=BASE_PATH, url=CONSENSUS_DB_URL)
 
-    if kwargs["bootstrap"] or (
-        not kwargs["no_bootstrap"]
-        and not consensus.exists
-        and bool_input("Do you want to bootstrap consensus database?")
+    if (
+        not consensus.exists
+        and not kwargs["no_bootstrap"]
+        and (kwargs["bootstrap"] or bool_input("Do you want to bootstrap consensus database?"))
     ):
         logger.info("Bootstrapping consensus database")
         async with consensus:
