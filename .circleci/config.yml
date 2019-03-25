@@ -1,29 +1,24 @@
 version: 2
 jobs:
   build:
-    working_directory: /app
+    working_directory: ~/app
     docker:
-      - image: docker:git
+      - image: perdy/circleci-python-builder
     steps:
       - checkout
       - setup_remote_docker
       - restore_cache:
           keys:
-            - v1-{{ .Branch }}
+            - v1-{{ checksum "Dockerfile" }}-{{ checksum "poetry.lock" }}
           paths:
-            - /caches/app.tar
+            - ~/caches/docker.tar
       - run:
           name: Build Docker image
-          command: |
-            set +o pipefail
-            docker load -i /caches/app.tar | true
-            docker build --cache-from=app -t app .
-            mkdir -p /caches
-            docker save -o /caches/app.tar app
+          command: builder --tag app build --cache ~/caches/docker.tar
       - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
+          key: v1-{{ checksum "Dockerfile" }}-{{ checksum "poetry.lock" }}
           paths:
-            - /caches/app.tar
+            - ~/caches/docker.tar
       - deploy:
           name: Push application Docker image
           command: |
@@ -31,7 +26,7 @@ jobs:
             export SIA_VERSION=`awk '$2=="SIA_VERSION" {print $3}' Dockerfile`
             export DOCKER_IMAGE=`echo "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${SIA_VERSION}" | awk '{print tolower($0)}'`
             docker tag app $DOCKER_IMAGE
-            docker push $DOCKER_IMAGE
+            builder --tag $DOCKER_IMAGE push
 workflows:
   version: 2
   build:
