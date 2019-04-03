@@ -26,9 +26,8 @@ RUN python3 -m pip install --no-cache-dir --upgrade pip poetry && \
     poetry cache:clear pypi --all
 
 # Install Sia
-ENV SIA_VERSION 1.4.0-rc4
-# ENV SIA_RELEASE https://sia.tech/releases/Sia-v${SIA_VERSION}-linux-amd64.zip
-ENV SIA_RELEASE https://pixeldrain.com/api/file/vzOFkVHx?download
+ENV SIA_VERSION 1.4.0
+ENV SIA_RELEASE https://sia.tech/releases/Sia-v${SIA_VERSION}-linux-amd64.zip
 RUN wget --progress=bar:force:noscroll --show-progress -q $SIA_RELEASE -O $SIADIR/sia.zip && \
     unzip -q $SIADIR/sia.zip -d $SIADIR && \
     mv $SIADIR/Sia-v${SIA_VERSION}-linux-amd64/* $SIADIR && \
