@@ -14,7 +14,7 @@ jobs:
             - ~/caches/docker.tar
       - run:
           name: Build Docker image
-          command: builder --tag app build --cache ~/caches/docker.tar
+          command: builder build -t app --cache ~/caches/docker.tar
       - save_cache:
           key: v1-{{ checksum "Dockerfile" }}-{{ checksum "poetry.lock" }}
           paths:
@@ -26,7 +26,7 @@ jobs:
             export SIA_VERSION=`awk '$2=="SIA_VERSION" {print $3}' Dockerfile`
             export DOCKER_IMAGE=`echo "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${SIA_VERSION}" | awk '{print tolower($0)}'`
             docker tag app $DOCKER_IMAGE
-            builder --tag $DOCKER_IMAGE push
+            builder push --tag $DOCKER_IMAGE
 workflows:
   version: 2
   build:
