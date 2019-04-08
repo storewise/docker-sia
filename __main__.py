@@ -148,8 +148,8 @@ async def start(*args, **kwargs):
         ) as process:
             loading = True
 
-            for message in (m.rstrip() for m in process.stdout):
-                print(message)
+            for message in process.stdout:
+                print(message, end="")
 
                 if loading and REGEX_LOADING.match(message):
                     loading = False
