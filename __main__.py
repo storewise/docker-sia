@@ -103,7 +103,7 @@ def unlock(condition):
 
     try:
         with requests.session() as session:
-            session.post("https://localhost:8000/wallet/unlock", json={"primaryseed": os.environ["UNLOCK_WALLET"]})
+            session.post("http://localhost:8000/wallet/unlock", json={"primaryseed": os.environ["UNLOCK_WALLET"]})
         logger.info("Unlock wallet")
     except KeyError:
         logger.error("Cannot unlock wallet. Primary seed must be specified under UNLOCK_WALLET environment variable")
