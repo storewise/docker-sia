@@ -4,6 +4,7 @@
 import logging
 import os
 import re
+import shlex
 import subprocess
 import sys
 import typing
@@ -97,7 +98,7 @@ class ConsensusDB:
             logger.error(f"Failed to download the bootstrap database. %s", str(e))
 
 
-def unlock(condition):
+def unlock(condition: Condition):
     with condition:
         condition.wait()
 
@@ -107,6 +108,22 @@ def unlock(condition):
         logger.info("Unlock wallet")
     except KeyError:
         logger.error("Cannot unlock wallet. Primary seed must be specified under UNLOCK_WALLET environment variable")
+
+
+def redirect_output(process, condition: Condition):
+    loading = True
+
+    try:
+        for message in process.stdout:
+            print(message, end="")
+
+            if loading and REGEX_LOADING.match(message):
+                loading = False
+
+                with condition:
+                    condition.notify_all()
+    except ValueError:
+        pass
 
 
 @command(
@@ -134,30 +151,31 @@ async def start(*args, **kwargs):
     else:
         logger.info("Skip bootstrap consensus database")
 
+    condition = Condition()
+    if kwargs["unlock"]:
+        unlock_thread = Thread(name="unlock", target=unlock, args=(condition,))
+        unlock_thread.start()
+
+    socat_cmd = shlex.split("socat tcp-listen:8000,reuseaddr,fork tcp:localhost:9980")
+    siad_cmd = shlex.split(f"siad --sia-directory {os.getcwd()}") + list(args)
     try:
-        condition = Condition()
-        if kwargs["unlock"]:
-            unlock_thread = Thread(name="unlock", target=unlock, args=(condition,))
-            unlock_thread.start()
+        with subprocess.Popen(socat_cmd) as socat_process:
+            with subprocess.Popen(
+                siad_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1, universal_newlines=True
+            ) as siad_process:
+                redirect_output_thread = Thread(
+                    name="redirect_output", target=redirect_output, args=(siad_process, condition)
+                )
+                redirect_output_thread.start()
+                siad_process.wait()
 
-        cmd_args = f"--sia-directory {os.getcwd()} " + " ".join(args)
-        cmd = f"socat tcp-listen:8000,reuseaddr,fork tcp:localhost:9980 & siad {cmd_args}"
-        cmd.rstrip()
-        with subprocess.Popen(
-            cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1, universal_newlines=True
-        ) as process:
-            loading = True
+            socat_process.terminate()
 
-            for message in process.stdout:
-                print(message, end="")
-
-                if loading and REGEX_LOADING.match(message):
-                    loading = False
-
-                    with condition:
-                        condition.notify_all()
     except KeyboardInterrupt:
         pass
+    finally:
+        logger.info("Siad command finished with code %d", siad_process.returncode)
+        logger.info("Socat command finished with code %d", socat_process.returncode)
 
 
 if __name__ == "__main__":
