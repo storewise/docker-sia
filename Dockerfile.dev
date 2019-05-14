@@ -1,0 +1,33 @@
+FROM python:3.7-slim
+
+ENV LC_ALL C.UTF-8
+ENV PYTHONIOENCODING utf-8
+ENV PYTHONUNBUFFERED true
+ENV APP sia
+ENV BASEDIR /srv/apps/$APP
+ENV APPDIR $BASEDIR/app
+ENV SIADIR $BASEDIR/sia
+ENV DATADIR $BASEDIR/data
+ENV PATH $SIADIR:$PATH
+
+# Create initial dirs
+RUN mkdir -p $APPDIR $SIADIR $DATADIR
+WORKDIR $APPDIR
+
+# Install system dependencies
+ENV RUNTIME_PACKAGES socat wget ca-certificates unzip
+RUN apt-get update && \
+    apt-get --no-install-recommends -y install $RUNTIME_PACKAGES && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install python dependencies
+COPY pyproject.toml poetry.lock $APPDIR/
+RUN python3 -m pip install --no-cache-dir --upgrade pip poetry && \
+    poetry install && \
+    poetry cache:clear pypi --all
+
+COPY siac siad $SIADIR/
+COPY __main__.py $APPDIR/
+
+EXPOSE 8000
+ENTRYPOINT ["poetry", "run", "python", "__main__.py"]

@@ -27,6 +27,33 @@ jobs:
             export DOCKER_IMAGE=`echo "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${SIA_VERSION}" | awk '{print tolower($0)}'`
             docker tag app $DOCKER_IMAGE
             builder push --tag $DOCKER_IMAGE
+  sia:
+    docker:
+      - image: circleci/golang:latest
+    working_directory: /go/
+    steps:
+      - run:
+          name: Get Sia from the master branch
+          command: go get -u gitlab.com/NebulousLabs/Sia/...
+      - persist_to_workspace:
+          root: bin
+          paths:
+            - siac
+            - siad
+  dev-build:
+    machine: true
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Build Docker image
+          command: docker build -f Dockerfile.dev -t ${CIRCLE_PROJECT_USERNAME,,}/${CIRCLE_PROJECT_REPONAME}:dev .
+      - run:
+          name: Push Docker image
+          command: |
+            echo $DOCKER_PASSWORD | base64 -d | docker login -u `echo $DOCKER_USERNAME | base64 -d` --password-stdin
+            docker push ${CIRCLE_PROJECT_USERNAME,,}/${CIRCLE_PROJECT_REPONAME}:dev
 workflows:
   version: 2
   build:
@@ -36,3 +63,7 @@ workflows:
             branches:
               only:
                 - master
+      - sia
+      - dev-build:
+          requires:
+            - sia
