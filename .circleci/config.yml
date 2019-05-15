@@ -40,6 +40,26 @@ jobs:
           paths:
             - siac
             - siad
+  sia-debug:
+    docker:
+      - image: circleci/golang:latest
+    working_directory: /go/src/gitlab.com/NebulousLabs/Sia
+    steps:
+      - run:
+          name: Checking out the debug branch
+          command: |
+            git clone https://gitlab.com/NebulousLabs/Sia.git .
+            git checkout -b debug origin/debug-jkawamoto
+      - run:
+          name: Compile Sia
+          command: |
+            make dependencies
+            make release
+      - persist_to_workspace:
+          root: /go/bin
+          paths:
+            - siac
+            - siad
   dev-build:
     machine: true
     steps:
@@ -54,6 +74,20 @@ jobs:
           command: |
             echo $DOCKER_PASSWORD | base64 -d | docker login -u `echo $DOCKER_USERNAME | base64 -d` --password-stdin
             docker push ${CIRCLE_PROJECT_USERNAME,,}/${CIRCLE_PROJECT_REPONAME}:dev
+  debug-build:
+    machine: true
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Build Docker image
+          command: docker build -f Dockerfile.dev -t ${CIRCLE_PROJECT_USERNAME,,}/${CIRCLE_PROJECT_REPONAME}:debug .
+      - run:
+          name: Push Docker image
+          command: |
+            echo $DOCKER_PASSWORD | base64 -d | docker login -u `echo $DOCKER_USERNAME | base64 -d` --password-stdin
+            docker push ${CIRCLE_PROJECT_USERNAME,,}/${CIRCLE_PROJECT_REPONAME}:debug
 workflows:
   version: 2
   build:
@@ -63,7 +97,11 @@ workflows:
             branches:
               only:
                 - master
-      - sia
-      - dev-build:
+      # - sia
+      # - dev-build:
+      #     requires:
+      #       - sia
+      - sia-debug
+      - debug-build:
           requires:
-            - sia
+            - sia-debug
