@@ -48,8 +48,8 @@ jobs:
       - run:
           name: Checking out the debug branch
           command: |
-            git clone https://gitlab.com/NebulousLabs/Sia.git .
-            git checkout -b debug origin/debug-jkawamoto
+            git clone https://github.com/jkawamoto/Sia.git .
+            git checkout -b debug origin/develop
       - run:
           name: Compile Sia
           command: |
