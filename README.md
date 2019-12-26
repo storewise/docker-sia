@@ -1,20 +1,20 @@
 # Docker Sia
 
-![Generic badge](https://img.shields.io/badge/Project-Goobox-blue.svg)
+![Generic badge](https://img.shields.io/badge/Project-StoreWise-blue.svg)
 ![Generic badge](https://img.shields.io/badge/Author-José%20Antonio%20Perdiguero%20López-blue.svg)
 ![Generic badge](https://img.shields.io/badge/Status-Production-blue.svg)
 [![GPLv3](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://www.gnu.org/copyleft/gpl.html)
-[![CircleCI branch](https://img.shields.io/circleci/project/github/GooBox/docker-sia/master.svg)](https://circleci.com/gh/GooBox/docker-sia)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/storewise/docker-sia/master.svg)](https://circleci.com/gh/storewise/docker-sia)
 
-* **Project:** Goobox
+* **Project:** StoreWise
 * **Author:** José Antonio Perdiguero López
 * **Status:** Production
 
-Docker image for Sia node with a useful wrapper to provide multiple features such as automatic wallet unlocking, 
+Docker image for Sia node with a useful wrapper to provide multiple features such as automatic wallet unlocking,
 consensus database bootstrapping...
 
 ## Getting started
-To run _Sia_ you need previously to install the requirements and you can either use public docker image or build it 
+To run _Sia_ you need previously to install the requirements and you can either use public docker image or build it
 from sources.
 
 ## Requirements
@@ -24,35 +24,35 @@ from sources.
 You can use public docker image to run the Sia service:
 
 ```commandline
-docker run -p 8000:8000 goobox/docker-sia:latest start
+docker run -p 8000:8000 storewise/docker-sia:latest start
 ```
-    
+
 To keep node your node data you can mount data volume as:
 
 ```commandline
-docker run -p 8000:8000 -v data:/srv/apps/sia/data goobox/docker-sia:latest start
+docker run -p 8000:8000 -v data:/srv/apps/sia/data storewise/docker-sia:latest start
 ```
-    
+
 ### Automatic wallet unlocking
-Wallet unlocking will be done after node finishes starting. It is necessary to define the wallet primary seed under 
+Wallet unlocking will be done after node finishes starting. It is necessary to define the wallet primary seed under
 `UNLOCK_WALLET` environment variable and to use `--unlock` flag.
 
 ```commandline
-docker run -p 8000:8000 -e UNLOCK_WALLET="<primary seed>" goobox/docker-sia:latest start --unlock
+docker run -p 8000:8000 -e UNLOCK_WALLET="<primary seed>" storewise/docker-sia:latest start --unlock
 ```
 
 ### Consensus database bootstrapping
-At start you will be asked for bootstrapping consensus database but it could be declared using `--(no-)bootstrap` flags 
+At start you will be asked for bootstrapping consensus database but it could be declared using `--(no-)bootstrap` flags
 to avoid manual interactions.
 
 ```commandline
-docker run -p 8000:8000 goobox/docker-sia:latest --bootstrap
+docker run -p 8000:8000 storewise/docker-sia:latest --bootstrap
 ```
 
 ```commandline
-docker run -p 8000:8000 goobox/docker-sia:latest --no-bootstrap
+docker run -p 8000:8000 storewise/docker-sia:latest --no-bootstrap
 ```
 
 ## License
 
-[GNU GPL v3](https://github.com/GooBox/docker-sia/blob/master/LICENSE)
+[GNU GPL v3](https://github.com/storewise/docker-sia/blob/master/LICENSE)
