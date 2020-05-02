@@ -24,9 +24,11 @@ jobs:
           command: |
             echo $DOCKER_PASSWORD | base64 -d | docker login -u `echo $DOCKER_USERNAME | base64 -d` --password-stdin
             export SIA_VERSION=`awk '$2=="SIA_VERSION" {print $3}' Dockerfile`
-            export DOCKER_IMAGE=`echo "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${SIA_VERSION}" | awk '{print tolower($0)}'`
-            docker tag app $DOCKER_IMAGE
-            builder push --tag $DOCKER_IMAGE
+            export DOCKER_IMAGE=`echo "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}" | awk '{print tolower($0)}'`
+            docker tag app $DOCKER_IMAGE:$SIA_VERSION
+            builder push --tag $DOCKER_IMAGE:$SIA_VERSION
+            docker tag app $DOCKER_IMAGE:latest
+            builder push --tag $DOCKER_IMAGE:latest
 workflows:
   version: 2
   build:
